@@ -4,6 +4,12 @@ IP-Symcon-Modul für die **Broadlink-Fernbedienungen** der RM-Reihe (RM4 pro,
 RM4 mini). Es lernt und sendet IR-Codes lokal per UDP, ohne Broadlink-Cloud,
 ohne IFTTT und ohne Zusatzdienst, nur mit PHP auf der Symcon-Box.
 
+> 🙏 **Thanks to [python-broadlink](https://github.com/mjg59/python-broadlink)**,
+> created by Mike Ryan and [Matthew Garrett](https://github.com/mjg59) and
+> maintained for years by [Felipe Martins Diel](https://github.com/felipediel)
+> and many contributors. The protocol layer of this module is rebuilt in PHP
+> from their work.
+
 Das Modul kann:
 
 - Geräte suchen, auch in einem anderen Netz als Symcon (Adressbereich)
