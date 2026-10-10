@@ -1,0 +1,12 @@
+{
+    "id": "{BFA3CB50-A41E-4636-86CA-6274004D6888}",
+    "name": "SymconBroadlink",
+    "author": "Heiko Schrörs",
+    "url": "https://github.com/HeikoSchroers/SymconBroadlink",
+    "compatibility": {
+        "version": "8.0"
+    },
+    "version": "1.0",
+    "build": 1,
+    "date": 0
+}
