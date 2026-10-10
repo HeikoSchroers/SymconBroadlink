@@ -1,0 +1,69 @@
+{
+    "elements": [
+        {
+            "type": "ValidationTextBox",
+            "name": "SearchRange",
+            "caption": "Adressbereich (z. B. 192.168.1.0/24, 192.168.1.20-40)"
+        },
+        {
+            "type": "CheckBox",
+            "name": "Broadcast",
+            "caption": "Zusätzlich per Broadcast im eigenen Netz suchen"
+        },
+        {
+            "type": "NumberSpinner",
+            "name": "SearchTime",
+            "caption": "Suchdauer",
+            "suffix": "Sekunden",
+            "minimum": 1,
+            "maximum": 10
+        },
+        {
+            "type": "Label",
+            "caption": "Der Broadcast erreicht nur das Netz, in dem Symcon steht; Router reichen ihn nicht weiter. Stehen die Fernbedienungen in einem anderen Netz (z. B. WLAN für Geräte), hier dessen Adressbereich eintragen: Dann fragt die Suche jede Adresse einzeln."
+        }
+    ],
+    "actions": [
+        {
+            "type": "Configurator",
+            "name": "Devices",
+            "caption": "Broadlink-Geräte",
+            "rowCount": 10,
+            "add": false,
+            "delete": true,
+            "sort": {
+                "column": "name",
+                "direction": "ascending"
+            },
+            "columns": [
+                {
+                    "caption": "Name",
+                    "name": "name",
+                    "width": "auto"
+                },
+                {
+                    "caption": "Typ",
+                    "name": "type",
+                    "width": "200px"
+                },
+                {
+                    "caption": "Adresse",
+                    "name": "address",
+                    "width": "160px"
+                },
+                {
+                    "caption": "MAC",
+                    "name": "mac",
+                    "width": "170px"
+                },
+                {
+                    "caption": "Gesperrt",
+                    "name": "locked",
+                    "width": "100px"
+                }
+            ],
+            "values": []
+        }
+    ],
+    "status": []
+}

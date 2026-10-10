@@ -1,0 +1,12 @@
+{
+    "id": "{2EFAFBA2-5668-4231-88E9-D51A9B8CD0DC}",
+    "name": "Broadlink Configurator",
+    "type": 4,
+    "vendor": "Broadlink",
+    "aliases": ["Broadlink Konfigurator", "Broadlink Suche"],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "BLC",
+    "url": "https://github.com/HeikoSchroers/SymconBroadlink"
+}

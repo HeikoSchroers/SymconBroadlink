@@ -1,0 +1,272 @@
+{
+    "elements": [
+        {
+            "type": "ValidationTextBox",
+            "name": "Host",
+            "caption": "Adresse (IP oder Name)"
+        },
+        {
+            "type": "Select",
+            "name": "DeviceType",
+            "caption": "Gerätetyp",
+            "options": [
+                { "caption": "automatisch (vom Gerät gemeldet)", "value": 0 },
+                { "caption": "RM4 pro (0x520B)", "value": 21003 },
+                { "caption": "RM4 mini (0x520C)", "value": 21004 },
+                { "caption": "älteres RM mini 3 (0x2737)", "value": 10039 },
+                { "caption": "älteres RM pro (0x272A)", "value": 10026 }
+            ]
+        },
+        {
+            "type": "ValidationTextBox",
+            "name": "MAC",
+            "caption": "MAC (aa:bb:cc:dd:ee:ff, optional)",
+            "validate": "^$|^([0-9A-Fa-f]{2}[:-]?){5}[0-9A-Fa-f]{2}$"
+        },
+        {
+            "type": "Label",
+            "caption": "Antwortet die Adresse nicht (z. B. nach einem DHCP-Wechsel), sucht die Instanz das Gerät über die MAC per Broadcast – das klappt nur im selben Netz wie Symcon. Besser: dem Gerät im Router eine feste Adresse geben."
+        },
+        {
+            "type": "CheckBox",
+            "name": "KeepAlive",
+            "caption": "Ping jede Minute (Firmware ab 53 ohne Cloud-Verbindung startet sonst regelmäßig neu)"
+        },
+        {
+            "type": "ExpansionPanel",
+            "caption": "Befehls-Schalter (z. B. für die HomeKit-Bridge)",
+            "items": [
+                {
+                    "type": "Label",
+                    "caption": "Jeder angekreuzte Befehl bekommt eine Schalter-Variable: Einschalten sendet den Code, danach fällt sie wieder auf Aus (Taster)."
+                },
+                {
+                    "type": "List",
+                    "name": "CommandSwitches",
+                    "caption": "Befehle",
+                    "rowCount": 12,
+                    "add": false,
+                    "delete": false,
+                    "sort": {
+                        "column": "Name",
+                        "direction": "ascending"
+                    },
+                    "columns": [
+                        {
+                            "caption": "Befehl",
+                            "name": "Name",
+                            "width": "auto",
+                            "add": ""
+                        },
+                        {
+                            "caption": "Schalter",
+                            "name": "Switch",
+                            "width": "100px",
+                            "add": false,
+                            "edit": {
+                                "type": "CheckBox"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "type": "ExpansionPanel",
+            "caption": "Gelernte Befehle",
+            "expanded": true,
+            "items": [
+                {
+                    "type": "List",
+                    "name": "Commands",
+                    "caption": "Befehle",
+                    "rowCount": 10,
+                    "add": false,
+                    "delete": false,
+                    "sort": {
+                        "column": "Name",
+                        "direction": "ascending"
+                    },
+                    "columns": [
+                        {
+                            "caption": "Name",
+                            "name": "Name",
+                            "width": "250px"
+                        },
+                        {
+                            "caption": "Bytes",
+                            "name": "Bytes",
+                            "width": "80px"
+                        },
+                        {
+                            "caption": "Code (Base64, gekürzt)",
+                            "name": "Code",
+                            "width": "auto"
+                        }
+                    ],
+                    "values": []
+                },
+                {
+                    "type": "RowLayout",
+                    "items": [
+                        {
+                            "type": "Select",
+                            "name": "Command",
+                            "caption": "Befehl",
+                            "options": []
+                        },
+                        {
+                            "type": "Button",
+                            "caption": "Senden",
+                            "onClick": "if ($Command !== '') { echo BL_SendCommand($id, $Command) ? 'Gesendet' : 'Senden fehlgeschlagen'; }"
+                        },
+                        {
+                            "type": "Button",
+                            "caption": "Löschen",
+                            "onClick": "if ($Command !== '') { BL_DeleteCommand($id, $Command); }",
+                            "confirm": "Diesen Befehl löschen? Eine Schalter-Variable dazu verschwindet mit."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "ExpansionPanel",
+            "caption": "Lernen",
+            "expanded": true,
+            "items": [
+                {
+                    "type": "Label",
+                    "name": "LearnInfo",
+                    "caption": ""
+                },
+                {
+                    "type": "RowLayout",
+                    "items": [
+                        {
+                            "type": "ValidationTextBox",
+                            "name": "NewName",
+                            "caption": "Name des Befehls (z. B. TV an)"
+                        },
+                        {
+                            "type": "Button",
+                            "caption": "Lernen (30 s)",
+                            "onClick": "BL_StartLearning($id, $NewName);"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "ExpansionPanel",
+            "caption": "Code von Hand eintragen",
+            "items": [
+                {
+                    "type": "Label",
+                    "caption": "Broadlink-Code als Base64 oder Hex, z. B. aus python-broadlink oder Home Assistant."
+                },
+                {
+                    "type": "RowLayout",
+                    "items": [
+                        {
+                            "type": "ValidationTextBox",
+                            "name": "CodeName",
+                            "caption": "Name"
+                        },
+                        {
+                            "type": "ValidationTextBox",
+                            "name": "CodeValue",
+                            "caption": "Code"
+                        },
+                        {
+                            "type": "Button",
+                            "caption": "Speichern",
+                            "onClick": "BL_SetCommand($id, $CodeName, $CodeValue);"
+                        },
+                        {
+                            "type": "Button",
+                            "caption": "Nur senden",
+                            "onClick": "echo BL_SendRaw($id, $CodeValue) ? 'Gesendet' : 'Senden fehlgeschlagen';"
+                        }
+                    ]
+                },
+                {
+                    "type": "RowLayout",
+                    "items": [
+                        {
+                            "type": "ValidationTextBox",
+                            "name": "SamsungCode",
+                            "caption": "Samsung-Code (8 Hex-Ziffern, z. B. E0E09966)",
+                            "validate": "^[0-9A-Fa-f]{8}$"
+                        },
+                        {
+                            "type": "Button",
+                            "caption": "Samsung senden",
+                            "onClick": "if (preg_match('/^[0-9A-Fa-f]{8}$/', $SamsungCode)) { echo BL_SendSamsung($id, hexdec($SamsungCode)) ? 'Gesendet' : 'Senden fehlgeschlagen'; } else { echo 'Acht Hex-Ziffern eintragen'; }"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "ExpansionPanel",
+            "caption": "Codes aus dem alten Broadlink-Skript übernehmen",
+            "items": [
+                {
+                    "type": "Label",
+                    "caption": "Einmalig: liest die Code-Variablen unter dem Skript (JSON mit „geraet“ und „code“). Gleichnamige Befehle bleiben unverändert, im Skript wird nichts gelöscht."
+                },
+                {
+                    "type": "RowLayout",
+                    "items": [
+                        {
+                            "type": "SelectScript",
+                            "name": "ImportScript",
+                            "caption": "Skript"
+                        },
+                        {
+                            "type": "ValidationTextBox",
+                            "name": "ImportDevice",
+                            "caption": "Nur Codes für Gerät (Name im Skript, leer = alle)"
+                        },
+                        {
+                            "type": "Button",
+                            "caption": "Übernehmen",
+                            "onClick": "echo BL_ImportScriptVariables($id, $ImportScript, $ImportDevice) . ' Codes übernommen';"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Label",
+            "name": "FoundAddress",
+            "caption": "",
+            "visible": false
+        },
+        {
+            "type": "Button",
+            "caption": "Verbindung testen",
+            "onClick": "echo BL_TestConnection($id);"
+        }
+    ],
+    "status": [
+        {
+            "code": 201,
+            "icon": "error",
+            "caption": "Broadlink nicht erreichbar"
+        },
+        {
+            "code": 202,
+            "icon": "error",
+            "caption": "Gerät gesperrt – in der Broadlink-App „Gerät sperren“ ausschalten"
+        },
+        {
+            "code": 203,
+            "icon": "error",
+            "caption": "Anmeldung abgelehnt"
+        }
+    ]
+}
