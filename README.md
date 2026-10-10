@@ -148,4 +148,4 @@ der Anmeldung stammen von dort. Sie sind öffentlich und kein Geheimnis.
 
 ## Lizenz
 
-MIT, siehe [LICENSE](LICENSE). Der Lizenztext von python-broadlink steht dort mit.
+MIT, siehe [LICENSE](LICENSE). Der Lizenztext von python-broadlink steht in [LICENSE-python-broadlink](LICENSE-python-broadlink).
