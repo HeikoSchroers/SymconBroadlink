@@ -1,0 +1,12 @@
+{
+    "id": "{38C72C7F-C696-400F-90A3-8DF2B00FAC04}",
+    "name": "Broadlink Device",
+    "type": 3,
+    "vendor": "Broadlink",
+    "aliases": ["Broadlink RM4", "Broadlink RM4 pro", "Broadlink RM4 mini", "Broadlink IR"],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "BL",
+    "url": "https://github.com/HeikoSchroers/SymconBroadlink"
+}
